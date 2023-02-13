@@ -45,12 +45,16 @@ app.use('/users', usersRoutes);
 // Separate them into separate routes files (see above).
 
 app.get("/login", (req, res) => {
+  console.log("Login Not Implemeted");
 });
 
 app.get("/register", (req, res) => {
+  console.log("Register Not Implemeted");
 });
 
 app.get("/story", (req, res) => {
+  console.log("Sorry not working atm. redirect to mainpage");
+  res.redirect("/");
 });
 
 app.get('/', (req, res) => {
