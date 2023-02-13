@@ -1,0 +1,12 @@
+.card {
+  display: flex;
+  width: 70%;
+  border: solid 2px;
+  border-color: #000000;
+  justify-content: center;
+}
+.card:hover{
+  color: black;
+  cursor: pointer;
+  transition: 150ms;
+}
