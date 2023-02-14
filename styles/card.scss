@@ -1,5 +1,6 @@
 .card {
   display: flex;
+  flex-direction: column;
   width: 70%;
   border: solid 2px;
   border-color: #000000;
@@ -11,4 +12,13 @@
   transition: 150ms;
   transform: translate(4px, -4px);
   box-shadow: -8px 8px 0
+}
+
+.card-body {
+  display: flex;
+  justify-content: space-between;
+}
+
+.card-title {
+  border-bottom: solid
 }
