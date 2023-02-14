@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="/styles/layout.css" />
     <link rel="stylesheet" href="/styles/header.css" />
     <link rel="stylesheet" href="/styles/card.css" />
+    <link rel="stylesheet" href="/styles/story_page.css" />
     <link
       rel="stylesheet"
       href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
@@ -26,53 +27,90 @@
   <body>
     <%- include('partials/_header.ejs') %>
 
-    <h1>Story Page</h1>
+    <h1 class="story_page_title">Story Page</h1>
 
-    <section>
-      <div class="card">
-        <div class="card-body">
-          <h3 class="card-title">Title of Story</h3>
-          <p class="card-text">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis
-            deleniti doloribus qui aperiam unde quis eos quibusdam nemo rerum
-            nam repudiandae porro labore blanditiis, iste cum hic rem soluta
-            enim. Sed molestias quam mollitia at reiciendis laboriosam tempore
-            hic nisi, quasi tempora ad nesciunt, asperiores facere minus,
-            doloribus rerum et amet ex dicta provident a aliquid. Totam ratione
-            itaque in dolorem consequuntur explicabo minima error voluptates
-            fugit ea, porro facilis? Tenetur, maiores! Consequuntur, et! Cum,
-            obcaecati veritatis repellat incidunt modi accusamus distinctio
-            dignissimos, id exercitationem tenetur animi provident. Quos illum
-            maiores itaque ipsum, libero debitis blanditiis repellendus vero
-            omnis vel!
-          </p>
-        </div>
+    <article class="story_page">
+      <div>
+        <h3 id="story_title">Title of Story</h3>
+        <p class="story_so_far">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis
+          deleniti doloribus qui aperiam unde quis eos quibusdam nemo rerum nam
+          repudiandae porro labore blanditiis, iste cum hic rem soluta enim. Sed
+          molestias quam mollitia at reiciendis laboriosam tempore hic nisi,
+          quasi tempora ad nesciunt, asperiores facere minus, doloribus rerum et
+          amet ex dicta provident a aliquid. Totam ratione itaque in dolorem
+          consequuntur explicabo minima error voluptates fugit ea, porro
+          facilis? Tenetur, maiores! Consequuntur, et! Cum, obcaecati veritatis
+          repellat incidunt modi accusamus distinctio dignissimos, id
+          exercitationem tenetur animi provident. Quos illum maiores itaque
+          ipsum, libero debitis blanditiis repellendus vero omnis vel!
+        </p>
       </div>
-      <form id="search" method="post" action="/contribution">
-        <label class="message" for="tweet-text"
-          ><strong>Contribution Input Box</strong>
-        </label>
-        <textarea name="text" id="contribution btn-primary"></textarea>
-        <div class="div-counter">
-          <button class="btn btn-primary" type="submit">Tweet</button>
-        </div>
+      <form id="search" method="post" action="#">
+        <textarea
+          class="textbox"
+          name="text"
+          placeholder="What happens next in this exciting story? Type your response here..."
+        ></textarea>
+        <button class="btn btn-primary story_btn" type="submit">
+          Add to the story!
+        </button>
       </form>
-    </section>
+    </article>
 
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title">Title of Story</h5>
-        <p class="card-text">First line of story goes here</p>
-        <a href="/story" class="btn btn-primary">Go somewhere</a>
+    <article class="upvoted_contributions">
+      <div class="contribution_container">
+        <span>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            class="bi bi-heart heart_icon"
+            viewBox="0 0 16 16"
+          >
+            <path
+              d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"
+            />
+          </svg>
+        </span>
       </div>
-    </div>
-
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title">Title of Story</h5>
-        <p class="card-text">First line of story goes here</p>
-        <a href="/story" class="btn btn-primary">Go somewhere</a>
+    </article>
+    <article class="upvoted_contributions">
+      <div class="contribution_container">
+        <span>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            class="bi bi-heart heart_icon"
+            viewBox="0 0 16 16"
+          >
+            <path
+              d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"
+            />
+          </svg>
+        </span>
       </div>
-    </div>
+    </article>
+    <article class="upvoted_contributions">
+      <div class="contribution_container">
+        <span>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            class="bi bi-heart heart_icon"
+            viewBox="0 0 16 16"
+          >
+            <path
+              d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"
+            />
+          </svg>
+        </span>
+      </div>
+    </article>
   </body>
 </html>
