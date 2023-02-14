@@ -59,7 +59,12 @@ app.get("/story", (req, res) => {
 });
 
 app.get('/', (req, res) => {
-  res.render('index');
+  getUsers().then((db) => {
+
+    res.render('index', db[0]);
+  });
+
+
 });
 
 app.listen(PORT, () => {
