@@ -54,7 +54,7 @@ app.get("/register", (req, res) => {
 
 app.get("/story", (req, res) => {
   console.log("Sorry not working atm. redirect to mainpage");
-  res.redirect("/");
+  res.render('story');
 });
 
 app.get('/', (req, res) => {

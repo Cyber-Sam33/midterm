@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Home Page</title>
+
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" />
+    <link rel="stylesheet" href="/vendor/border-box.css" />
+    <link rel="stylesheet" href="/styles/main.css" />
+    <link rel="stylesheet" href="/styles/layout.css" />
+    <link rel="stylesheet" href="/styles/header.css" />
+    <link rel="stylesheet" href="/styles/card.css" />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="/vendor/jquery-3.0.0.js"></script>
+    <script defer src="/scripts/app.js"></script>
+  </head>
+
+  <body>
+    <%- include('partials/_header.ejs') %>
+
+    <h1>Story Page</h1>
+
+    <section>
+      <div class="card">
+        <div class="card-body">
+          <h3 class="card-title">Title of Story</h3>
+          <p class="card-text">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis
+            deleniti doloribus qui aperiam unde quis eos quibusdam nemo rerum
+            nam repudiandae porro labore blanditiis, iste cum hic rem soluta
+            enim. Sed molestias quam mollitia at reiciendis laboriosam tempore
+            hic nisi, quasi tempora ad nesciunt, asperiores facere minus,
+            doloribus rerum et amet ex dicta provident a aliquid. Totam ratione
+            itaque in dolorem consequuntur explicabo minima error voluptates
+            fugit ea, porro facilis? Tenetur, maiores! Consequuntur, et! Cum,
+            obcaecati veritatis repellat incidunt modi accusamus distinctio
+            dignissimos, id exercitationem tenetur animi provident. Quos illum
+            maiores itaque ipsum, libero debitis blanditiis repellendus vero
+            omnis vel!
+          </p>
+        </div>
+      </div>
+      <form id="search" method="post" action="/contribution">
+        <label class="message" for="tweet-text"
+          ><strong>Contribution Input Box</strong>
+        </label>
+        <textarea name="text" id="contribution btn-primary"></textarea>
+        <div class="div-counter">
+          <button class="btn btn-primary" type="submit">Tweet</button>
+        </div>
+      </form>
+    </section>
+
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Title of Story</h5>
+        <p class="card-text">First line of story goes here</p>
+        <a href="/story" class="btn btn-primary">Go somewhere</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Title of Story</h5>
+        <p class="card-text">First line of story goes here</p>
+        <a href="/story" class="btn btn-primary">Go somewhere</a>
+      </div>
+    </div>
+  </body>
+</html>
