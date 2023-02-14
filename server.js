@@ -61,7 +61,7 @@ app.get("/story", (req, res) => {
 
 app.get("/story/:id", (req, res) => {
   const storyId = req.params.id;
-  const clause = `SELECT * FROM stories WHERE id = ${storyId};`
+  const clause = `SELECT * FROM stories WHERE id = ${storyId};`;
 
   getUsers(clause).then((db) => {
     res.render('story', {db});
