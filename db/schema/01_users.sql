@@ -23,3 +23,5 @@ CREATE TABLE contributions (
   contribution VARCHAR(255),
   upvotes INTEGER
 );
+
+
