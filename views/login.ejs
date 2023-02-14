@@ -24,36 +24,23 @@
 <body>
   <%- include('partials/_header.ejs') %>
 
-  <div class="card">
-    <div class="card-body">
-      <div class="card-text">
-      <h5 class="card-title">Title of Story</h5>
-      <p class="card-text">First line of story goes here</p>
-    </div>
-      <a href="/story" class="btn btn-primary" method="GET">Go to Story. Make sure to send story ID</a>
-    </div>
-  </div>
+  <main style="margin: 1em;">
+    <form method="POST" action="/login">
+      <h3 class="font-weight-bold">Login</h3>
 
-  <div class="card">
-    <div class="card-body">
-      <div class="card-text">
-      <h5 class="card-title">Title of Story</h5>
-      <p class="card-text">First line of story goes here</p>
-    </div>
-      <a href="/story" class="btn btn-primary">Go somewhere</a>
-    </div>
-  </div>
+      <div class="form-group">
+        <label for="exampleInputEmail1">Email address</label>
+        <input name="email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else 🤞</small>
+      </div>
+      <div class="form-group">
+        <label for="exampleInputPassword1">Password</label>
+        <input name="password" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+      </div>
 
-  <div class="card">
-    <div class="card-body">
-      <div class="card-text">
-      <h5 class="card-title">Title of Story</h5>
-      <p class="card-text">First line of story goes here</p>
-    </div>
-      <a href="/story" class="btn btn-primary">Go somewhere</a>
-
-    </div>
-  </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </main>
 
   <div class="container-center">
     <ul class="pagination">
