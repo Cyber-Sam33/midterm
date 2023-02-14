@@ -46,7 +46,7 @@ app.use('/users', usersRoutes);
 
 app.get("/login", (req, res) => {
   console.log("Hi");
-  // console.log(getUsers());
+
   res.render("login")
 });
 
@@ -59,13 +59,20 @@ app.get("/story", (req, res) => {
   res.render('story');
 });
 
-app.get('/', (req, res) => {
-  getUsers().then((db) => {
+app.get("/story/:id", (req, res) => {
+  const storyId = req.params.id;
+  const clause = `SELECT * FROM stories WHERE id = ${storyId};`;
 
-    res.render('index', db[0]);
+  getUsers(clause).then((db) => {
+    res.render('story', {db});
   });
+});
 
-
+app.get('/', (req, res) => {
+  const clause = 'SELECT * FROM stories;';
+  getUsers(clause).then((db) => {
+    res.render('index', {db});
+  });
 });
 
 app.listen(PORT, () => {
