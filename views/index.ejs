@@ -23,37 +23,17 @@
 
 <body>
   <%- include('partials/_header.ejs') %>
-
+  <% for (let index in db) {%>
   <div class="card">
     <div class="card-body">
       <div class="card-text">
       <h5 class="card-title">Title of Story</h5>
-      <p class="card-text">First line of story goes here</p>
+      <p class="card-text"><%= db[index].story %></p>
     </div>
-      <a href="/story" class="btn btn-primary" method="GET">Go to Story. Make sure to send story ID</a>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="card-body">
-      <div class="card-text">
-      <h5 class="card-title">Title of Story</h5>
-      <p class="card-text">First line of story goes here</p>
-    </div>
-      <a href="/story" class="btn btn-primary">Go somewhere</a>
+      <a href="/story/<%= db[index].id %>" class="btn btn-primary" method="GET">Go to Story. Make sure to send story ID</a>
     </div>
   </div>
-
-  <div class="card">
-    <div class="card-body">
-      <div class="card-text">
-      <h5 class="card-title">Title of Story</h5>
-      <p class="card-text">First line of story goes here</p>
-    </div>
-      <a href="/story" class="btn btn-primary">Go somewhere</a>
-
-    </div>
-  </div>
+  <% } %>
 
   <div class="container-center">
     <ul class="pagination">

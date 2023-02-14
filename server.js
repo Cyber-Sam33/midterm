@@ -46,7 +46,7 @@ app.use('/users', usersRoutes);
 
 app.get("/login", (req, res) => {
   console.log("Hi");
-  // console.log(getUsers());
+
   res.render("login")
 });
 
@@ -60,12 +60,10 @@ app.get("/story", (req, res) => {
 });
 
 app.get('/', (req, res) => {
-  getUsers().then((db) => {
-
-    res.render('index', db[0]);
+  const clause = 'SELECT * FROM stories;';
+  getUsers(clause).then((db) => {
+    res.render('index', {db});
   });
-
-
 });
 
 app.listen(PORT, () => {
