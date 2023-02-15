@@ -14,14 +14,16 @@ CREATE TABLE stories (
   id SERIAL PRIMARY KEY NOT NULL,
   owner_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
   title VARCHAR(255),
-  story VARCHAR(255)
+  story VARCHAR(255),
+  end_story BOOLEAN DEFAULT FALSE
 );
 
 CREATE TABLE contributions (
   id SERIAL PRIMARY KEY NOT NULL,
   story_id INTEGER REFERENCES stories(id) ON DELETE CASCADE,
   contribution VARCHAR(255),
-  upvotes INTEGER
+  upvotes INTEGER,
+  date_created INTEGER
 );
 
 
