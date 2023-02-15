@@ -59,12 +59,12 @@ app.get("/login", (req, res) => {
 app.post("/login", (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
+
   const clause = `SELECT * FROM users WHERE email = '${email}';`;
   getUsers(clause).then((db) => {
-    console.log(db);
+    req.session.user_id = db[0].id;
+    console.log(req.session.user_id);
   });
-
-  req.session.user_id = 1; //User id from database for conveinience
   res.redirect('/');
 });
 
@@ -107,7 +107,7 @@ app.get("/:id", (req, res) => {
 });
 
 app.post("/story", (req, res) => {
-  addStory(1, req.body.title, req.body.story).then((data) => {
+  addStory(req.session.user_id, req.body.title, req.body.story).then((data) =>  {
     console.log("Data is", data)
     res.redirect("/")
   })
