@@ -50,14 +50,14 @@
       </form>
     </article>
 
-    <% for (let index in contributions) {%>
+    <% for (let contribution in contributions) {%>
     <article class="upvoted_contributions">
       <div class="contribution_container">
         <span>
           <i class="fa-solid fa-heart"></i>
           <textarea name="contribution" id="dynamic-text">
-            <% contributions[index].contribution</textarea
-          >%>
+            <% $('#upvoted').prepend(contribution); %> </textarea
+          >
         </span>
       </div>
     </article>
