@@ -5,6 +5,7 @@ require('dotenv').config();
 const sassMiddleware = require('./lib/sass-middleware');
 const express = require('express');
 const morgan = require('morgan');
+const cookieSession = require('cookie-session');
 
 const PORT = process.env.PORT || 8080;
 const app = express();
@@ -25,7 +26,12 @@ app.use(
   })
 );
 app.use(express.static('public'));
-
+app.use(cookieSession({
+  name: 'session',
+  keys: ["key1","key2"],
+  // Cookie Options
+  maxAge: 24 * 60 * 60 * 1000 // 24 hours
+}));
 // Separated Routes for each Resource
 // Note: Feel free to replace the example routes below with your own
 const userApiRoutes = require('./routes/users-api');
@@ -38,6 +44,7 @@ const {getUsers} = require('./db/queries/users');
 app.use('/api/users', userApiRoutes);
 app.use('/api/widgets', widgetApiRoutes);
 app.use('/users', usersRoutes);
+
 // Note: mount other resources here, using the same pattern above
 // const {getUsers} = require("./db/queries/users")
 // Home page
@@ -46,6 +53,14 @@ app.use('/users', usersRoutes);
 
 app.get("/login", (req, res) => {
   res.render("login");
+});
+
+app.post("/login", (req, res) => {
+  const email = req.body.email;
+  const password = req.body.password;
+  const clause = `SELECT * FROM users WHERE email = ${email};`;
+  req.session.user_id = 1; //User id from database for conveinience
+  res.redirect('/');
 });
 
 app.get("/register", (req, res) => {
