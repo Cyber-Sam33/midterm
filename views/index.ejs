@@ -24,14 +24,14 @@
 <body>
   <%- include('partials/_header.ejs') %>
   <div class="container-main">
-  <% for (let index in db) {%>
+  <% for (let index in data) {%>
   <div class="card">
     <div class="card-body">
       <div class="card-text">
-      <h5 class="card-title"><%= db[index].title %></h5>
-      <p class="card-text"><%= db[index].story %></p>
+      <h5 class="card-title"><%= data[index].title %></h5>
+      <p class="card-text"><%= data[index].story %></p>
     </div>
-      <a href="/story/<%= db[index].id %>" class="btn btn-primary" method="GET">Go to Story. Make sure to send story ID</a>
+      <a href="/story/<%= data[index].id %>" class="btn btn-primary" method="GET">Go to Story. Make sure to send story ID</a>
     </div>
   </div>
   <% } %>
