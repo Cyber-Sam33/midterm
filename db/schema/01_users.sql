@@ -22,7 +22,8 @@ CREATE TABLE contributions (
   id SERIAL PRIMARY KEY NOT NULL,
   story_id INTEGER REFERENCES stories(id) ON DELETE CASCADE,
   contribution VARCHAR(255),
-  upvotes INTEGER
+  upvotes INTEGER,
+  date_created INTEGER
 );
 
 
