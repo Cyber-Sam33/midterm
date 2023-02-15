@@ -88,13 +88,18 @@ app.get("/story/:id", (req, res) => {
   const storyId = req.params.id;
   const clause = `SELECT * FROM stories WHERE id = ${storyId};`;
 
+  console.log('storyID', storyId);
+
   getUsers(clause).then((db) => {
     const clause2 = `SELECT * FROM contributions WHERE story_id = ${storyId}`;
+    console.log(clause2);
     db.query(clause2).then((contributions) => {
       res.render('story', { db, storyId, contributions });
+      console.log('contributions', contributions);
     });
   });
 });
+
 
 app.get('/', (req, res) => {
   const clause = 'SELECT * FROM stories;';
@@ -106,3 +111,10 @@ app.get('/', (req, res) => {
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
 });
+
+
+
+
+
+
+
