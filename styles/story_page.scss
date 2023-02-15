@@ -34,7 +34,7 @@
 
 .upvoted_contributions{
   border: solid black 2px;
-  height: 10rem;
+  // height: 10rem;
   width: 75%;
   margin-top: 4rem;
   padding: 1rem;
@@ -44,10 +44,87 @@
   box-shadow: 10px 10px 10px grey;
 }
 
-.heart_icon{
+.fa-solid {
   color: royalblue;
+  width:10rem;
+  height:10rem;
   margin: auto;
 }
+
+.fa-solid:HOVER {
+  color: gold;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// #story_title{
+//   text-align: center;
+// }
+
+// #search{
+//   padding: 2rem;
+// }
+
+// .story_so_far{
+//   padding: 2rem;
+// }
+
+// .story_page {
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: center;
+//   // flex-wrap: wrap;
+//   width: 70%;
+//   border: solid 2px;
+//   border-color: #000000;
+//   justify-content: center;
+// }
+
+// .textbox{
+//   padding: 3rem;
+//     height: 15rem;
+//     width: 100%;
+//     margin-top: 0;
+// }
+
+// .textbox:hover {
+//   box-shadow: 10px 10px 10px grey;
+// }
+
+// .upvoted_contributions{
+//   border: solid black 2px;
+//   height: 10rem;
+//   width: 75%;
+//   margin-top: 4rem;
+//   padding: 1rem;
+// }
+
+// .upvoted_contributions:hover {
+//   box-shadow: 10px 10px 10px grey;
+// }
+
+// .heart_icon{
+//   color: royalblue;
+//   margin: auto;
+// }
 
 
 

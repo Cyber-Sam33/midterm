@@ -1,6 +1,10 @@
 // load .env data into process.env
 require('dotenv').config();
 
+//connection to database
+const db = require('./db/connection');
+
+
 // Web server config
 const sassMiddleware = require('./lib/sass-middleware');
 const express = require('express');
@@ -28,7 +32,7 @@ app.use(
 app.use(express.static('public'));
 app.use(cookieSession({
   name: 'session',
-  keys: ["key1","key2"],
+  keys: ["key1", "key2"],
   // Cookie Options
   maxAge: 24 * 60 * 60 * 1000 // 24 hours
 }));
@@ -37,8 +41,8 @@ app.use(cookieSession({
 const userApiRoutes = require('./routes/users-api');
 const widgetApiRoutes = require('./routes/widgets-api');
 const usersRoutes = require('./routes/users');
-const {getUsers} = require('./db/queries/users');
-const {addStory} = require('./db/queries/stories');
+const { getUsers } = require('./db/queries/users');
+const { addStory } = require('./db/queries/stories');
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
 // Note: Endpoints that return data (eg. JSON) usually start with `/api`
@@ -77,22 +81,54 @@ app.get("/story", (req, res) => {
   res.render('story');
 });
 
+app.post("/story/:id", (req, res) => {
+  //store story variable
+  story_contribution = req.body.text;
+  console.log('variable here: ', story_contribution);
+
+  // use a query to store the contribution in the database
+  const storyId = req.params.id;
+  console.log('story ID', storyId);
+  const clause = `INSERT INTO contributions (story_id, contribution, upvotes) VALUES (${storyId}, '${story_contribution}', 0);
+  `;
+  // insert value into data base
+  db.query(clause)
+    .then(data => {
+      console.log(data.rows);
+    });
+
+  ///selct contribution element by ID from db and append to the page (3 max)
+  res.redirect(`/story/${storyId}`);
+
+});
+
 app.get("/story/:id", (req, res) => {
   const storyId = req.params.id;
   const clause = `SELECT * FROM stories WHERE id = ${storyId};`;
-  getUsers(clause).then((db) => {
-    res.render('story', {db});
+  console.log('clause', clause);
+  console.log('storyID', storyId);
+
+  getUsers(clause).then((data) => {
+    const clause2 = `SELECT * FROM contributions WHERE story_id = ${storyId} LIMIT 10`;
+    console.log(clause2);
+    db.query(clause2).then((contributions) => {
+      console.log('contributions', contributions);
+      res.render('story', { data, storyId, contributions: contributions.rows }); //db to data
+
+    });
   });
 });
 
-app.get("/mystory", (req,res) => {
-  res.render("mystory")
-})
+
+
+app.get("/mystory", (req, res) => {
+  res.render("mystory");
+});
 
 app.get('/', (req, res) => {
   const clause = 'SELECT * FROM stories;';
   getUsers(clause).then((db) => {
-    res.render('index', {db});
+    res.render('index', { db });
   });
 });
 
@@ -102,19 +138,26 @@ app.get("/:id", (req, res) => {
   console.log(offset);
   const clause = `SELECT * FROM stories LIMIT 3 OFFSET ${offset};`;
   getUsers(clause).then((db) => {
-    res.render('index', {db});
+    res.render('index', { db });
   });
 });
 
 app.post("/story", (req, res) => {
-  addStory(req.session.user_id, req.body.title, req.body.story).then((data) =>  {
-    console.log("Data is", data)
-    res.redirect("/")
-  })
+  addStory(req.session.user_id, req.body.title, req.body.story).then((data) => {
+    console.log("Data is", data);
+    res.redirect("/");
+  });
 
-})
+});
 
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
 });
+
+
+
+
+
+
+
