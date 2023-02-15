@@ -45,9 +45,7 @@ app.use('/users', usersRoutes);
 // Separate them into separate routes files (see above).
 
 app.get("/login", (req, res) => {
-  console.log("Hi");
-
-  res.render("login")
+  res.render("login");
 });
 
 app.get("/register", (req, res) => {
@@ -61,8 +59,7 @@ app.get("/story", (req, res) => {
 
 app.get("/story/:id", (req, res) => {
   const storyId = req.params.id;
-  const clause = `SELECT * FROM stories WHERE id = ${storyId};`
-
+  const clause = `SELECT * FROM stories WHERE id = ${storyId};`;
   getUsers(clause).then((db) => {
     res.render('story', {db});
   });
