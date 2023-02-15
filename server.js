@@ -5,6 +5,7 @@ require('dotenv').config();
 const sassMiddleware = require('./lib/sass-middleware');
 const express = require('express');
 const morgan = require('morgan');
+const cookieSession = require('cookie-session');
 
 const PORT = process.env.PORT || 8080;
 const app = express();
@@ -25,19 +26,26 @@ app.use(
   })
 );
 app.use(express.static('public'));
-
+app.use(cookieSession({
+  name: 'session',
+  keys: ["key1","key2"],
+  // Cookie Options
+  maxAge: 24 * 60 * 60 * 1000 // 24 hours
+}));
 // Separated Routes for each Resource
 // Note: Feel free to replace the example routes below with your own
 const userApiRoutes = require('./routes/users-api');
 const widgetApiRoutes = require('./routes/widgets-api');
 const usersRoutes = require('./routes/users');
 const {getUsers} = require('./db/queries/users');
+const {addStory} = require('./db/queries/stories');
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
 // Note: Endpoints that return data (eg. JSON) usually start with `/api`
 app.use('/api/users', userApiRoutes);
 app.use('/api/widgets', widgetApiRoutes);
 app.use('/users', usersRoutes);
+
 // Note: mount other resources here, using the same pattern above
 // const {getUsers} = require("./db/queries/users")
 // Home page
@@ -45,9 +53,19 @@ app.use('/users', usersRoutes);
 // Separate them into separate routes files (see above).
 
 app.get("/login", (req, res) => {
-  console.log("Hi");
+  res.render("login");
+});
 
-  res.render("login")
+app.post("/login", (req, res) => {
+  const email = req.body.email;
+  const password = req.body.password;
+
+  const clause = `SELECT * FROM users WHERE email = '${email}';`;
+  getUsers(clause).then((db) => {
+    req.session.user_id = db[0].id;
+    console.log(req.session.user_id);
+  });
+  res.redirect('/');
 });
 
 app.get("/register", (req, res) => {
@@ -62,11 +80,14 @@ app.get("/story", (req, res) => {
 app.get("/story/:id", (req, res) => {
   const storyId = req.params.id;
   const clause = `SELECT * FROM stories WHERE id = ${storyId};`;
-
   getUsers(clause).then((db) => {
     res.render('story', {db});
   });
 });
+
+app.get("/mystory", (req,res) => {
+  res.render("mystory")
+})
 
 app.get('/', (req, res) => {
   const clause = 'SELECT * FROM stories;';
@@ -74,6 +95,25 @@ app.get('/', (req, res) => {
     res.render('index', {db});
   });
 });
+
+app.get("/:id", (req, res) => {
+  const pageId = req.params.id;
+  const offset = (pageId - 1) * 3;
+  console.log(offset);
+  const clause = `SELECT * FROM stories LIMIT 3 OFFSET ${offset};`;
+  getUsers(clause).then((db) => {
+    res.render('index', {db});
+  });
+});
+
+app.post("/story", (req, res) => {
+  addStory(req.session.user_id, req.body.title, req.body.story).then((data) =>  {
+    console.log("Data is", data)
+    res.redirect("/")
+  })
+
+})
+
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);

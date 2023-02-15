@@ -8,5 +8,7 @@ const getUsers = (clause) => {
     });
 };
 
+
+
 module.exports = { getUsers };
 
