@@ -68,6 +68,10 @@ app.get("/story/:id", (req, res) => {
   });
 });
 
+app.get("/mystory", (req,res) => {
+  res.render("mystory")
+})
+
 app.get('/', (req, res) => {
   const clause = 'SELECT * FROM stories;';
   getUsers(clause).then((db) => {

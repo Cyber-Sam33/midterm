@@ -20,31 +20,27 @@
   <script src="/vendor/jquery-3.0.0.js"></script>
   <script defer src="/scripts/app.js"></script>
 </head>
-
 <body>
   <%- include('partials/_header.ejs') %>
-  <div class="container-main">
-  <% for (let index in db) {%>
+
+  <div class="wrapper">
+  <form id="start-story" class="story-form" action="/story" method="POST">
+    <input class="title" type="text" placeholder="Your title goes here">
+    <textarea name="text" id="story-text" placeholder="Start journey here"></textarea>
+    <div class="button-counter">
+      <button class="btn btn-primary" type="submit">Boldly go!</button>
+    </div>
+  </form>
+
   <div class="card">
     <div class="card-body">
       <div class="card-text">
       <h5 class="card-title">Title of Story</h5>
-      <p class="card-text"><%= db[index].story %></p>
+      <p class="card-text">Story itself</p>
     </div>
-      <a href="/story/<%= db[index].id %>" class="btn btn-primary" method="GET">Go to Story. Make sure to send story ID</a>
+      <a class="btn btn-primary" method="GET">End story</a>
     </div>
   </div>
-  <% } %>
   </div>
-  <div class="container-center">
-    <ul class="pagination">
-      <li><a href="#">1</a></li>
-      <li><a href="#">2</a></li>
-      <li><a href="#">3</a></li>
-      <li><a href="#">4</a></li>
-      <li><a href="#">5</a></li>
-    </ul>
-  </div>
-</body>
 
-</html>
+</body>
