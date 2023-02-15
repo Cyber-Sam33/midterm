@@ -58,7 +58,11 @@ app.get("/login", (req, res) => {
 app.post("/login", (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
-  const clause = `SELECT * FROM users WHERE email = ${email};`;
+  const clause = `SELECT * FROM users WHERE email = '${email}';`;
+  getUsers(clause).then((db) => {
+    console.log(db);
+  });
+
   req.session.user_id = 1; //User id from database for conveinience
   res.redirect('/');
 });
