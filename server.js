@@ -1,6 +1,10 @@
 // load .env data into process.env
 require('dotenv').config();
 
+//connection to database
+const db = require('./db/connection');
+
+
 // Web server config
 const sassMiddleware = require('./lib/sass-middleware');
 const express = require('express');
@@ -31,7 +35,7 @@ app.use(express.static('public'));
 const userApiRoutes = require('./routes/users-api');
 const widgetApiRoutes = require('./routes/widgets-api');
 const usersRoutes = require('./routes/users');
-const {getUsers} = require('./db/queries/users');
+const { getUsers } = require('./db/queries/users');
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
 // Note: Endpoints that return data (eg. JSON) usually start with `/api`
@@ -47,7 +51,7 @@ app.use('/users', usersRoutes);
 app.get("/login", (req, res) => {
   console.log("Hi");
 
-  res.render("login")
+  res.render("login");
 });
 
 app.get("/register", (req, res) => {
@@ -59,19 +63,43 @@ app.get("/story", (req, res) => {
   res.render('story');
 });
 
+app.post("/story/:id", (req, res) => {
+  //store story variable
+  story_contribution = req.body.text;
+  console.log('variable here: ', story_contribution);
+
+  // use a query to store the contribution in the database
+  const storyId = req.params.id;
+  console.log('story ID', storyId);
+  const clause = `INSERT INTO contributions (story_id, contribution, upvotes) VALUES (${storyId}, '${story_contribution}', 0);
+  `;
+  // insert value into data base
+  db.query(clause)
+    .then(data => {
+      console.log(data.rows);
+    });
+
+  ///selct contribution element by ID from db and append to the page (3 max)
+  res.redirect(`/story/${storyId}`);
+
+});
+
 app.get("/story/:id", (req, res) => {
   const storyId = req.params.id;
   const clause = `SELECT * FROM stories WHERE id = ${storyId};`;
 
   getUsers(clause).then((db) => {
-    res.render('story', {db});
+    const clause2 = `SELECT * FROM contributions WHERE story_id = ${storyId}`;
+    db.query(clause2).then((contributions) => {
+      res.render('story', { db, storyId, contributions });
+    });
   });
 });
 
 app.get('/', (req, res) => {
   const clause = 'SELECT * FROM stories;';
   getUsers(clause).then((db) => {
-    res.render('index', {db});
+    res.render('index', { db });
   });
 });
 
