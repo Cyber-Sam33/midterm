@@ -62,11 +62,15 @@ app.post("/login", (req, res) => {
 
   const clause = `SELECT * FROM users WHERE email = '${email}';`;
   getUsers(clause).then((db) => {
-    req.session.user_id = db[0].id;
-    console.log(req.session.user_id);
+    req.session.user_id = db[0].id; //Still working on cookies
   });
   res.redirect('/');
 });
+
+// app.post("/logout", (req, res) => {
+//   req.session = null;
+//   res.redirect("/login");
+// });
 
 app.get("/register", (req, res) => {
   console.log("Register Not Implemeted");
@@ -86,7 +90,13 @@ app.get("/story/:id", (req, res) => {
 });
 
 app.get("/mystory", (req,res) => {
-  res.render("mystory")
+  const user = req.session.user_id;
+  console.log(user);
+  const clause = `SELECT * FROM stories WHERE owner_id = ${user};`;
+  getUsers(clause).then((db) => {
+    console.log(db);
+    res.render("mystory", {db});
+  });
 })
 
 app.get('/', (req, res) => {
