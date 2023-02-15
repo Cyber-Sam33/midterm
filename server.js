@@ -87,15 +87,16 @@ app.post("/story/:id", (req, res) => {
 app.get("/story/:id", (req, res) => {
   const storyId = req.params.id;
   const clause = `SELECT * FROM stories WHERE id = ${storyId};`;
-
+  console.log('clause', clause);
   console.log('storyID', storyId);
 
-  getUsers(clause).then((db) => {
-    const clause2 = `SELECT * FROM contributions WHERE story_id = ${storyId}`;
+  getUsers(clause).then((data) => {
+    const clause2 = `SELECT * FROM contributions WHERE story_id = ${storyId} LIMIT 3`;
     console.log(clause2);
     db.query(clause2).then((contributions) => {
-      res.render('story', { db, storyId, contributions });
       console.log('contributions', contributions);
+      res.render('story', { data, storyId, contributions: contributions.rows }); //db to data
+
     });
   });
 });

@@ -36,7 +36,7 @@
     <article class="story_page">
       <div>
         <h3 id="story_title">Title of Story</h3>
-        <p class="story_so_far"><%= db[0].story %></p>
+        <p class="story_so_far"><%= data[0].story %></p>
       </div>
       <form id="search" method="post" action="/story/<%=storyId%>">
         <textarea
@@ -50,14 +50,12 @@
       </form>
     </article>
 
-    <% for (let contribution in contributions) {%>
+    <% for (let index in contributions) {%>
     <article class="upvoted_contributions">
       <div class="contribution_container">
         <span>
           <i class="fa-solid fa-heart"></i>
-          <textarea name="contribution" id="dynamic-text">
-            <% $('#upvoted_contributions').prepend(contribution); %> </textarea
-          >
+          <p><%= contributions[index].contribution %></p>
         </span>
       </div>
     </article>
