@@ -60,30 +60,18 @@ app.get("/login", (req, res) => {
   res.render("login", {user});
 });
 
-app.get("/mystory", (req, res) => {
-  const clause = `SELECT * FROM stories WHERE owner_id = ${req.session.user_id};`;
-  // console.log("req.session is:", req.session.user_id)
-  getUsers(clause)
-    .then((data) => {
-      res.render("mystory", { data });
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-});
-
 app.post("/login", (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
   const clause = `SELECT * FROM users WHERE email = '${email}';`;
   getUsers(clause).then((data) => {
-    req.session.user_id = data[0].id; //Still working on cookies
+    req.session.user_id = data[0].id;
     return res.redirect("/");
   });
 });
 
-app.get("/logout", (req, res) => {
-  req.session.user_id = null;
+app.post("/logout", (req, res) => {
+  req.session = null;
   res.redirect("/");
 });
 
@@ -103,12 +91,16 @@ app.post("/end/:id", (req, res) => {
   res.redirect("/");
 });
 
-app.post("/update", (req, res) => {
+app.post("/update/:id", (req, res) => {
   //Need to select Current Story
   //Concatnate with Contribute
   const paragraph = req.body.text;
-  console.log(`Stauts of the Story : ${paragraph}`);
+  const storyId = req.params.id;
+  const clause = `Update story SET story = story+'${paragraph}' WHERE id = ${storyId};`
 
+  getUsers(clause).then(data => {
+    res.redirect(`/`);
+  });
   //Then Save
   // const clause = `SELECT contribution FROM contributions WHERE;`;
   // getUsers(clause).then(data =>
@@ -136,7 +128,7 @@ app.post("/story/:id", (req, res) => {
 
 });
 
-app.get("/story/upvotes/:story_id/:contribution_id", (req, res) => {
+app.post("/story/upvotes/:story_id/:contribution_id", (req, res) => {
   const clause = `UPDATE contributions SET upvotes = upvotes + 1 WHERE id = $1 AND story_id = $2`;
   db.query(clause, [req.params.contribution_id, req.params.story_id])
     .then((result) => {
@@ -145,7 +137,6 @@ app.get("/story/upvotes/:story_id/:contribution_id", (req, res) => {
     }
     );
 });
-
 
 app.get("/story/:id", (req, res) => {
   const user = req.session.user_id;
@@ -162,13 +153,16 @@ app.get("/story/:id", (req, res) => {
 });
 
 app.get("/mystory", (req,res) => {
-  const user = req.session.user_id; // This will be replaced with cookie
+  const user = req.session.user_id;
+  console.log(user);
+
   const clause = `SELECT * FROM stories WHERE owner_id = ${user};`;
   getUsers(clause).then((data) => {
     res.render("mystory", {data, user});
   });
 
 });
+
 
 app.get('/', (req, res) => {
   res.redirect("/1");

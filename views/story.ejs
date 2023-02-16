@@ -38,6 +38,7 @@
         <h3 id="story_title"><%= data[0].title %></h3>
         <p class="story_so_far"><%= data[0].story %></p>
       </div>
+      <% if(!data[0].end_story) {%>
       <form id="search" method="post" action="/story/<%= storyId%>">
         <textarea
           class="textbox"
@@ -55,30 +56,28 @@
         </button>
       </form>
         <%} %>
-
+      <% } %>
     </article>
-
+    <% if(!data[0].end_story) {%>
     <% for (let index in contributions) {%>
     <article class="upvoted_contributions">
-      <form class="select" method="POST" action="/update">
+
       <div class="contribution_container">
-        <a href="/story/upvotes/<%=storyId%>/<%= contributions[index].id%>"
-          ><span>
-            <i class="fa-solid fa-heart heart_logo"></i>
-            <p><%= contributions[index].contribution %></p>
+        <form action="/story/upvotes/<%=storyId%>/<%= contributions[index].id%>" method="POST">
+            <button>
+            <i class="fa-solid fa-heart heart_logo"></i></button>
             <output name="upvoter" class="upvote" for="upvote">
-              <strong><%= contributions[index].upvotes%></strong></output
-            >
-          </span>
-        </a>
+              <strong><%= contributions[index].upvotes%></strong></output>
+          </form>
+          <form action="/update/<%= storyId%>" method="POST">
+            <input hidden type="text" value="<%= contributions[index].contribution %>" name="text"/>
+            <p><%= contributions[index].contribution %></p>
+            <button>SELECT</button>
+          </form>
       </div>
-        <% if(user && user === data[0].owner_id) {%>
-        <button class="btn btn-primary story_btn" type="submit">
-          Select!
-        </button>
-        <%} %>
-      </form>
+
     </article>
+    <% } %>
     <% } %>
   </body>
 </html>

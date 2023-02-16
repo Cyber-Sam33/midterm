@@ -49,7 +49,7 @@
             <h5 class="card-title"><%= data[index].title %></h5>
             <p class="card-text"><%= data[index].story %></p>
           </div>
-          <a class="btn btn-primary" method="GET">End story</a>
+          <a class="btn btn-primary" method="GET" href="/story/<%= data[index].id %>">Go story</a>
         </div>
       </div>
       <% } %>
