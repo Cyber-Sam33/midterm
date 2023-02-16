@@ -31,16 +31,21 @@
       <button class="btn btn-primary" type="submit">Boldly go!</button>
     </div>
   </form>
-
+  <% for (let index in data) {%>
   <div class="card">
     <div class="card-body">
       <div class="card-text">
+<<<<<<< HEAD
+      <h5 class="card-title"><%= data[index].title %></h5>
+      <p class="card-text"><%= data[index].story %></p>
+=======
       <h5 class="card-title"><%= data[0].title %> </h5>
       <p class="card-text"><%= data[0].story %></p>
+>>>>>>> f6ce860b587120b459b4c4d4f18d9efd6742441f
     </div>
       <a class="btn btn-primary" method="GET">End story</a>
     </div>
-  </div>
+  </div><% } %>
   </div>
 
 </body>

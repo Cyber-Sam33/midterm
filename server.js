@@ -61,6 +61,18 @@ app.get("/login", (req, res) => {
   res.render("login", {user});
 });
 
+app.get("/mystory", (req, res) => {
+  const clause = `SELECT * FROM stories WHERE owner_id = ${req.session.user_id};`
+  // console.log("req.session is:", req.session.user_id)
+  getUsers(clause)
+  .then((data) => {
+    res.render("mystory", { data });
+  })
+  .catch((err) => {
+    console.log(err)
+  })
+});
+
 app.post("/login", (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
@@ -94,10 +106,16 @@ app.post("/story/:id", (req, res) => {
 
   // use a query to store the contribution in the database
   const storyId = req.params.id;
+<<<<<<< HEAD
 
   console.log('story ID', storyId);
   const clause = `INSERT INTO contributions (story_id, contribution, upvotes) VALUES (${storyId}, '${story_contribution}', 0);`;
 
+=======
+  // console.log('story ID', storyId);
+  const clause = `INSERT INTO contributions (story_id, contribution, upvotes)   VALUES (${storyId}, '${story_contribution}', 0);
+  `;
+>>>>>>> c954bb6e1069a38ac152a84d36076c6a56609aed
   // insert value into data base
   db.query(clause)
     .then(data => {
@@ -148,10 +166,14 @@ app.get("/:id", (req, res) => {
     res.render('index', { data, user });
   });
 });
+// ============================================================
+
+
+
+
 
 app.post("/story", (req, res) => {
   addStory(req.session.user_id, req.body.title, req.body.story).then((data) => {
-    console.log("Data is", data);
     res.redirect("/");
   });
 
@@ -164,7 +186,7 @@ app.listen(PORT, () => {
 
 
 
-
-
+// ${req.session.user_id}
+// WHERE owner_id = ${req.session.user_id}
 
 
