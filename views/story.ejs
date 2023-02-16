@@ -35,7 +35,7 @@
 
     <article class="story_page">
       <div>
-        <h3 id="story_title">Title of Story</h3>
+        <h3 id="story_title"><%= data[0].title %></h3>
         <p class="story_so_far"><%= data[0].story %></p>
       </div>
       <form id="search" method="post" action="/story/<%= storyId%>">
@@ -48,7 +48,7 @@
           Add to the story!
         </button>
       </form>
-        <% if(user) {%>
+        <% if(user && user === data[0].owner_id) {%>
           <form id="search" method="post" action="/end/<%= storyId%>">
           <button class="btn btn-primary story_btn" type="submit" >
           End the Story!
@@ -67,9 +67,11 @@
           <p name ="text"><%= contributions[index].contribution %></p>
         </span>
         </div>
+        <% if(user && user === data[0].owner_id) {%>
         <button class="btn btn-primary story_btn" type="submit">
           Select!
         </button>
+        <%} %>
       </form>
     </article>
     <% } %>
