@@ -87,6 +87,17 @@ app.get("/story", (req, res) => {
   res.render('story');
 });
 
+app.post("/update", (req, res) => {
+  //Need to select Current Story
+  //Concatnate with Contribute
+  //Then Save
+  // const clause = `SELECT contribution FROM contributions WHERE;`;
+  // getUsers(clause).then(data =>
+  //   {
+  //     const currentStory =
+  //   })
+});
+
 app.post("/story/:id", (req, res) => {
   //store story variable
   story_contribution = req.body.text;
