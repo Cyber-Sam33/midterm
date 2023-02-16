@@ -103,9 +103,9 @@ app.post("/story/:id", (req, res) => {
 });
 
 app.get("/story/upvotes/:story_id/:contribution_id", (req, res) => {
-
-  console.log('req params: ', req.params.story_id);
-  console.log('Contribution req params: ', req.params.contribution_id);
+  // console.log('req PARAMS: ', req.params);
+  // console.log('req params story id: ', req.params.story_id);
+  // console.log('Contribution req params: ', req.params.contribution_id);
   const clause = `UPDATE contributions SET upvotes = upvotes + 1 WHERE id = $1 AND story_id = $2`;
   db.query(clause, [req.params.contribution_id, req.params.story_id])
     .then((result) => {
