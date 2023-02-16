@@ -121,10 +121,9 @@ app.post("/story/:id", (req, res) => {
 });
 
 app.get("/story/:id", (req, res) => {
-
+  const user = req.session.user_id;
   const storyId = req.params.id;
   const clause = `SELECT * FROM stories WHERE id = ${storyId};`;
-  const user = req.session.user_id;
   getUsers(clause).then((data) => {
     const clause2 = `SELECT * FROM contributions WHERE story_id = ${storyId} LIMIT 10`;
 
