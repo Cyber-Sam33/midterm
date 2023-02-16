@@ -32,15 +32,18 @@
     </div>
   </form>
 
-  <div class="card">
+  <% for (let index in data) {%>
+  <article class="card">
     <div class="card-body">
       <div class="card-text">
-      <h5 class="card-title"><%= data[0].title %> </h5>
-      <p class="card-text"><%= data[0].story %></p>
+      <h5 class="card-title"><%= data[index].title %> </h5>
+      <p class="card-text"><%= data[index].story %></p>
     </div>
-      <a class="btn btn-primary" method="GET">End story</a>
+      <a class="btn btn-primary" method="GET">Go To Story</a>
     </div>
   </div>
-  </div>
-
+  </article>
+  <% }%>
 </body>
+
+
