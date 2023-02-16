@@ -102,17 +102,31 @@ app.post("/story/:id", (req, res) => {
 
 });
 
+app.get("/story/upvotes/:story_id/:contribution_id", (req, res) => {
+
+  console.log('req params: ', req.params.story_id);
+  console.log('Contribution req params: ', req.params.contribution_id);
+  const clause = `UPDATE contributions SET upvotes = upvotes + 1 WHERE id = $1 AND story_id = $2`;
+  db.query(clause, [req.params.contribution_id, req.params.story_id])
+    .then((result) => {
+      console.log(result);
+      res.redirect(`/story/${req.params.story_id}`);
+    }
+    );
+});
+
+
 app.get("/story/:id", (req, res) => {
   const storyId = req.params.id;
   const clause = `SELECT * FROM stories WHERE id = ${storyId};`;
-  console.log('clause', clause);
-  console.log('storyID', storyId);
+  // console.log('clause', clause);
+  // console.log('storyID', storyId);
 
   getUsers(clause).then((data) => {
-    const clause2 = `SELECT * FROM contributions WHERE story_id = ${storyId} LIMIT 10`;
+    const clause2 = `SELECT * FROM contributions WHERE story_id = ${storyId} ORDER BY upvotes DESC`;
     console.log(clause2);
     db.query(clause2).then((contributions) => {
-      console.log('contributions', contributions);
+      // console.log('contributions', contributions);
       res.render('story', { data, storyId, contributions: contributions.rows }); //db to data
 
     });
