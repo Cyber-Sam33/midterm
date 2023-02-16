@@ -53,10 +53,15 @@
     <% for (let index in contributions) {%>
     <article class="upvoted_contributions">
       <div class="contribution_container">
-        <span>
-          <i class="fa-solid fa-heart"></i>
-          <p><%= contributions[index].contribution %></p>
-        </span>
+        <a href="/story/upvotes/<%=storyId%>/<%= contributions[index].id%>"
+          ><span>
+            <i class="fa-solid fa-heart heart_logo"></i>
+            <p><%= contributions[index].contribution %></p>
+            <output name="upvoter" class="upvote" for="upvote">
+              <strong><%= contributions[index].upvotes%></strong></output
+            >
+          </span>
+        </a>
       </div>
     </article>
     <% } %>

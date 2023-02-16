@@ -62,15 +62,15 @@ app.get("/login", (req, res) => {
 });
 
 app.get("/mystory", (req, res) => {
-  const clause = `SELECT * FROM stories WHERE owner_id = ${req.session.user_id};`
+  const clause = `SELECT * FROM stories WHERE owner_id = ${req.session.user_id};`;
   // console.log("req.session is:", req.session.user_id)
   getUsers(clause)
-  .then((data) => {
-    res.render("mystory", { data });
-  })
-  .catch((err) => {
-    console.log(err)
-  })
+    .then((data) => {
+      res.render("mystory", { data });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 });
 
 app.post("/login", (req, res) => {
@@ -120,13 +120,24 @@ app.post("/story/:id", (req, res) => {
 
 });
 
+app.get("/story/upvotes/:story_id/:contribution_id", (req, res) => {
+  const clause = `UPDATE contributions SET upvotes = upvotes + 1 WHERE id = $1 AND story_id = $2`;
+  db.query(clause, [req.params.contribution_id, req.params.story_id])
+    .then((result) => {
+      console.log(result);
+      res.redirect(`/story/${req.params.story_id}`);
+    }
+    );
+});
+
+
 app.get("/story/:id", (req, res) => {
 
   const storyId = req.params.id;
   const clause = `SELECT * FROM stories WHERE id = ${storyId};`;
   const user = req.session.user_id;
   getUsers(clause).then((data) => {
-    const clause2 = `SELECT * FROM contributions WHERE story_id = ${storyId} LIMIT 10`;
+    const clause2 = `SELECT * FROM contributions WHERE story_id = ${storyId} ORDER BY upvotes DESC`;
 
     db.query(clause2).then((contributions) => {
       console.log('contributions', contributions);
@@ -143,7 +154,7 @@ app.get("/mystory", (req,res) => {
     res.render("mystory", {data, user});
   });
 
-})
+});
 
 app.get('/', (req, res) => {
   res.redirect("/1");

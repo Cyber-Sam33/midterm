@@ -1,51 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <title>Home Page</title>
 
-<head>
-  <title>Home Page</title>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <meta charset="UTF-8" >
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" >
+    <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" />
+    <link rel="stylesheet" href="/vendor/border-box.css" />
+    <link rel="stylesheet" href="/styles/main.css" />
+    <link rel="stylesheet" href="/styles/layout.css" />
+    <link rel="stylesheet" href="/styles/header.css" />
+    <link rel="stylesheet" href="/styles/card.css" />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="/vendor/jquery-3.0.0.js"></script>
+    <script defer src="/scripts/app.js"></script>
+  </head>
+  <body>
+    <%- include('partials/_header.ejs') %>
 
-  <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" />
-  <link rel="stylesheet" href="/vendor/border-box.css" />
-  <link rel="stylesheet" href="/styles/main.css" />
-  <link rel="stylesheet" href="/styles/layout.css" />
-  <link rel="stylesheet" href="/styles/header.css" />
-  <link rel="stylesheet" href="/styles/card.css" />
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-  <script src="/vendor/jquery-3.0.0.js"></script>
-  <script defer src="/scripts/app.js"></script>
-</head>
-<body>
-  <%- include('partials/_header.ejs') %>
-
-  <div class="wrapper">
-  <form id="start-story" class="story-form" action="/story" method="POST">
-    <input name="title" class="title" type="text" placeholder="Your title goes here">
-    <textarea name="story" id="story-text" placeholder="Start journey here"></textarea>
-    <div class="button-counter">
-      <button class="btn btn-primary" type="submit">Boldly go!</button>
+    <div class="wrapper">
+      <form id="start-story" class="story-form" action="/story" method="POST">
+        <input
+          name="title"
+          class="title"
+          type="text"
+          placeholder="Your title goes here"
+        />
+        <textarea
+          name="story"
+          id="story-text"
+          placeholder="Start journey here"
+        ></textarea>
+        <div class="button-counter">
+          <button class="btn btn-primary" type="submit">Boldly go!</button>
+        </div>
+      </form>
+      <% for (let index in data) {%>
+      <div class="card">
+        <div class="card-body">
+          <div class="card-text">
+            <h5 class="card-title"><%= data[index].title %></h5>
+            <p class="card-text"><%= data[index].story %></p>
+          </div>
+          <a class="btn btn-primary" method="GET">End story</a>
+        </div>
+      </div>
+      <% } %>
     </div>
-  </form>
-  <% for (let index in data) {%>
-  <div class="card">
-    <div class="card-body">
-      <div class="card-text">
-<<<<<<< HEAD
-      <h5 class="card-title"><%= data[index].title %></h5>
-      <p class="card-text"><%= data[index].story %></p>
-=======
-      <h5 class="card-title"><%= data[0].title %> </h5>
-      <p class="card-text"><%= data[0].story %></p>
->>>>>>> f6ce860b587120b459b4c4d4f18d9efd6742441f
-    </div>
-      <a class="btn btn-primary" method="GET">End story</a>
-    </div>
-  </div><% } %>
-  </div>
-
-</body>
+  </body>
+</html>
