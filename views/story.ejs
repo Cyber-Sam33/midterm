@@ -38,32 +38,35 @@
         <h3 id="story_title">Title of Story</h3>
         <p class="story_so_far"><%= data[0].story %></p>
       </div>
-      <form id="search" method="post" action="/story/<%=storyId%>">
+      <form id="search" method="post" action="/story/<%= storyId%>">
         <textarea
           class="textbox"
           name="text"
           placeholder="What happens next in this exciting story? Type your response here..."
         ></textarea>
-        <button class="btn btn-primary story_btn" type="submit">
+        <button class="btn btn-primary story_btn" type="submit" >
           Add to the story!
         </button>
+      </form>
         <% if(user) {%>
-        <button class="btn btn-primary story_btn" type="submit">
+          <form id="search" method="post" action="/end/<%= storyId%>">
+          <button class="btn btn-primary story_btn" type="submit" >
           End the Story!
         </button>
-        <%} %>
       </form>
+        <%} %>
+
     </article>
 
     <% for (let index in contributions) {%>
     <article class="upvoted_contributions">
+      <form class="select" method="POST" action="/update">
       <div class="contribution_container">
         <span>
           <i class="fa-solid fa-heart"></i>
-          <p><%= contributions[index].contribution %></p>
+          <p name ="text"><%= contributions[index].contribution %></p>
         </span>
-      </div>
-      <form class="select" method="POST" action="/update">
+        </div>
         <button class="btn btn-primary story_btn" type="submit">
           Select!
         </button>
