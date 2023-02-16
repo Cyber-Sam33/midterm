@@ -106,16 +106,9 @@ app.post("/story/:id", (req, res) => {
 
   // use a query to store the contribution in the database
   const storyId = req.params.id;
-<<<<<<< HEAD
 
-  console.log('story ID', storyId);
   const clause = `INSERT INTO contributions (story_id, contribution, upvotes) VALUES (${storyId}, '${story_contribution}', 0);`;
 
-=======
-  // console.log('story ID', storyId);
-  const clause = `INSERT INTO contributions (story_id, contribution, upvotes)   VALUES (${storyId}, '${story_contribution}', 0);
-  `;
->>>>>>> c954bb6e1069a38ac152a84d36076c6a56609aed
   // insert value into data base
   db.query(clause)
     .then(data => {
