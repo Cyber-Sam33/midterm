@@ -77,13 +77,16 @@ app.post("/login", (req, res) => {
   const password = req.body.password;
 
   const clause = `SELECT * FROM users WHERE email = '${email}';`;
-  getUsers(clause).then((db) => {
-    req.session.user_id = db[0].id;
-    console.log(req.session.user_id);
-    res.redirect('/');
+  getUsers(clause).then((data) => {
+    req.session.user_id = data[0].id; //Still working on cookies
   });
 
 });
+
+// app.post("/logout", (req, res) => {
+//   req.session = null;
+//   res.redirect("/login");
+// });
 
 app.get("/register", (req, res) => {
   console.log("Register Not Implemeted");
@@ -132,15 +135,20 @@ app.get("/story/:id", (req, res) => {
   });
 });
 
+app.get("/mystory", (req,res) => {
+  const user = 1; // This will be replaced with cookie
+  console.log(user);
+  const clause = `SELECT * FROM stories WHERE owner_id = ${user};`;
+  getUsers(clause).then((data) => {
+    res.render("mystory", {data});
+  });
 
-
-
+})
 
 app.get('/', (req, res) => {
   const clause = 'SELECT * FROM stories;';
-  console.log("Req session is:", req.session.user_id);
-  getUsers(clause).then((db) => {
-    res.render('index', { db });
+  getUsers(clause).then((data) => {
+    res.render('index', { data });
   });
 });
 
@@ -149,8 +157,8 @@ app.get("/:id", (req, res) => {
   const offset = (pageId - 1) * 3;
   console.log(offset);
   const clause = `SELECT * FROM stories LIMIT 3 OFFSET ${offset};`;
-  getUsers(clause).then((db) => {
-    res.render('index', { db });
+  getUsers(clause).then((data) => {
+    res.render('index', { data });
   });
 });
 // ============================================================
