@@ -51,7 +51,6 @@ app.use('/api/widgets', widgetApiRoutes);
 app.use('/users', usersRoutes);
 
 // Note: mount other resources here, using the same pattern above
-// const {getUsers} = require("./db/queries/users")
 // Home page
 // Warning: avoid creating more routes in this file!
 // Separate them into separate routes files (see above).
@@ -76,33 +75,51 @@ app.get("/mystory", (req, res) => {
 app.post("/login", (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
-
   const clause = `SELECT * FROM users WHERE email = '${email}';`;
   getUsers(clause).then((data) => {
     req.session.user_id = data[0].id; //Still working on cookies
     return res.redirect("/");
   });
-
 });
 
-app.post("/logout", (req, res) => {
-  req.session = null;
-  res.redirect("/login");
+app.get("/logout", (req, res) => {
+  req.session.user_id = null;
+  res.redirect("/");
 });
 
 app.get("/register", (req, res) => {
   console.log("Register Not Implemeted");
 });
 
-app.get("/story", (req, res) => {
-  console.log("Sorry not working atm. redirect to mainpage");
-  res.render('story');
+app.post("/end/:id", (req, res) => {
+  const pageId = req.params.id;
+  const clause = `UPDATE stories SET end_story = TRUE WHERE id = ${pageId};`;
+  const removeClause = `DELETE FROM contributions WHERE story_id = ${pageId};`;
+  db.query(clause)
+  .then(data => {
+    db.query(removeClause);
+  });
+
+  res.redirect("/");
+});
+
+app.post("/update", (req, res) => {
+  //Need to select Current Story
+  //Concatnate with Contribute
+  const paragraph = req.body.text;
+  console.log(`Stauts of the Story : ${paragraph}`);
+
+  //Then Save
+  // const clause = `SELECT contribution FROM contributions WHERE;`;
+  // getUsers(clause).then(data =>
+  //   {
+  //     const currentStory =
+  //   })
 });
 
 app.post("/story/:id", (req, res) => {
   //store story variable
   story_contribution = req.body.text;
-  console.log('variable here: ', story_contribution);
 
   // use a query to store the contribution in the database
   const storyId = req.params.id;
@@ -112,7 +129,6 @@ app.post("/story/:id", (req, res) => {
   // insert value into data base
   db.query(clause)
     .then(data => {
-      console.log(data.rows);
     });
 
   ///selct contribution element by ID from db and append to the page (3 max)
@@ -132,15 +148,13 @@ app.get("/story/upvotes/:story_id/:contribution_id", (req, res) => {
 
 
 app.get("/story/:id", (req, res) => {
-
+  const user = req.session.user_id;
   const storyId = req.params.id;
   const clause = `SELECT * FROM stories WHERE id = ${storyId};`;
-  const user = req.session.user_id;
   getUsers(clause).then((data) => {
     const clause2 = `SELECT * FROM contributions WHERE story_id = ${storyId} ORDER BY upvotes DESC`;
 
     db.query(clause2).then((contributions) => {
-      console.log('contributions', contributions);
       res.render('story', { data, storyId, contributions: contributions.rows, user}); //db to data
 
     });
@@ -164,7 +178,6 @@ app.get("/:id", (req, res) => {
   const pageId = req.params.id;
   const offset = (pageId - 1) * 3;
   const user = req.session.user_id;
-  console.log(user);
   const clause = `SELECT * FROM stories LIMIT 4 OFFSET ${offset};`;
   getUsers(clause).then((data) => {
     res.render('index', { data, user });
@@ -182,7 +195,6 @@ app.post("/story", (req, res) => {
   });
 
 });
-
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);

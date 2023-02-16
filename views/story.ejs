@@ -35,23 +35,32 @@
 
     <article class="story_page">
       <div>
-        <h3 id="story_title">Title of Story</h3>
+        <h3 id="story_title"><%= data[0].title %></h3>
         <p class="story_so_far"><%= data[0].story %></p>
       </div>
-      <form id="search" method="post" action="/story/<%=storyId%>">
+      <form id="search" method="post" action="/story/<%= storyId%>">
         <textarea
           class="textbox"
           name="text"
           placeholder="What happens next in this exciting story? Type your response here..."
         ></textarea>
-        <button class="btn btn-primary story_btn" type="submit">
+        <button class="btn btn-primary story_btn" type="submit" >
           Add to the story!
         </button>
       </form>
+        <% if(user && user === data[0].owner_id) {%>
+          <form id="search" method="post" action="/end/<%= storyId%>">
+          <button class="btn btn-primary story_btn" type="submit" >
+          End the Story!
+        </button>
+      </form>
+        <%} %>
+
     </article>
 
     <% for (let index in contributions) {%>
     <article class="upvoted_contributions">
+      <form class="select" method="POST" action="/update">
       <div class="contribution_container">
         <a href="/story/upvotes/<%=storyId%>/<%= contributions[index].id%>"
           ><span>
@@ -63,6 +72,12 @@
           </span>
         </a>
       </div>
+        <% if(user && user === data[0].owner_id) {%>
+        <button class="btn btn-primary story_btn" type="submit">
+          Select!
+        </button>
+        <%} %>
+      </form>
     </article>
     <% } %>
   </body>
