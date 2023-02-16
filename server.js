@@ -60,6 +60,18 @@ app.get("/login", (req, res) => {
   res.render("login");
 });
 
+app.get("/mystory", (req, res) => {
+  const clause = `SELECT * FROM stories WHERE owner_id = ${req.session.user_id};`
+  // console.log("req.session is:", req.session.user_id)
+  getUsers(clause)
+  .then((data) => {
+    res.render("mystory", { data });
+  })
+  .catch((err) => {
+    console.log(err)
+  })
+});
+
 app.post("/login", (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
@@ -68,8 +80,9 @@ app.post("/login", (req, res) => {
   getUsers(clause).then((db) => {
     req.session.user_id = db[0].id;
     console.log(req.session.user_id);
+    res.redirect('/');
   });
-  res.redirect('/');
+
 });
 
 app.get("/register", (req, res) => {
@@ -88,8 +101,8 @@ app.post("/story/:id", (req, res) => {
 
   // use a query to store the contribution in the database
   const storyId = req.params.id;
-  console.log('story ID', storyId);
-  const clause = `INSERT INTO contributions (story_id, contribution, upvotes) VALUES (${storyId}, '${story_contribution}', 0);
+  // console.log('story ID', storyId);
+  const clause = `INSERT INTO contributions (story_id, contribution, upvotes)   VALUES (${storyId}, '${story_contribution}', 0);
   `;
   // insert value into data base
   db.query(clause)
@@ -105,14 +118,14 @@ app.post("/story/:id", (req, res) => {
 app.get("/story/:id", (req, res) => {
   const storyId = req.params.id;
   const clause = `SELECT * FROM stories WHERE id = ${storyId};`;
-  console.log('clause', clause);
-  console.log('storyID', storyId);
+  // console.log('clause', clause);
+  // console.log('storyID', storyId);
 
   getUsers(clause).then((data) => {
     const clause2 = `SELECT * FROM contributions WHERE story_id = ${storyId} LIMIT 10`;
-    console.log(clause2);
+    // console.log(clause2);
     db.query(clause2).then((contributions) => {
-      console.log('contributions', contributions);
+      // console.log('contributions', contributions);
       res.render('story', { data, storyId, contributions: contributions.rows }); //db to data
 
     });
@@ -121,12 +134,11 @@ app.get("/story/:id", (req, res) => {
 
 
 
-app.get("/mystory", (req, res) => {
-  res.render("mystory");
-});
+
 
 app.get('/', (req, res) => {
   const clause = 'SELECT * FROM stories;';
+  console.log("Req session is:", req.session.user_id);
   getUsers(clause).then((db) => {
     res.render('index', { db });
   });
@@ -141,10 +153,14 @@ app.get("/:id", (req, res) => {
     res.render('index', { db });
   });
 });
+// ============================================================
+
+
+
+
 
 app.post("/story", (req, res) => {
   addStory(req.session.user_id, req.body.title, req.body.story).then((data) => {
-    console.log("Data is", data);
     res.redirect("/");
   });
 
@@ -157,7 +173,7 @@ app.listen(PORT, () => {
 
 
 
-
-
+// ${req.session.user_id}
+// WHERE owner_id = ${req.session.user_id}
 
 
