@@ -61,15 +61,15 @@ app.get("/login", (req, res) => {
 });
 
 app.get("/mystory", (req, res) => {
-  const clause = `SELECT * FROM stories WHERE owner_id = ${req.session.user_id};`
+  const clause = `SELECT * FROM stories WHERE owner_id = ${req.session.user_id};`;
   // console.log("req.session is:", req.session.user_id)
   getUsers(clause)
-  .then((data) => {
-    res.render("mystory", { data });
-  })
-  .catch((err) => {
-    console.log(err)
-  })
+    .then((data) => {
+      res.render("mystory", { data });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 });
 
 app.post("/login", (req, res) => {
@@ -135,15 +135,15 @@ app.get("/story/:id", (req, res) => {
   });
 });
 
-app.get("/mystory", (req,res) => {
+app.get("/mystory", (req, res) => {
   const user = 1; // This will be replaced with cookie
   console.log(user);
   const clause = `SELECT * FROM stories WHERE owner_id = ${user};`;
   getUsers(clause).then((data) => {
-    res.render("mystory", {data});
+    res.render("mystory", { data });
   });
 
-})
+});
 
 app.get('/', (req, res) => {
   const clause = 'SELECT * FROM stories;';
