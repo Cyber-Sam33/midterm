@@ -57,7 +57,8 @@ app.use('/users', usersRoutes);
 // Separate them into separate routes files (see above).
 
 app.get("/login", (req, res) => {
-  res.render("login");
+  const user = req.session.user_id;
+  res.render("login", {user});
 });
 
 app.post("/login", (req, res) => {
@@ -67,14 +68,15 @@ app.post("/login", (req, res) => {
   const clause = `SELECT * FROM users WHERE email = '${email}';`;
   getUsers(clause).then((data) => {
     req.session.user_id = data[0].id; //Still working on cookies
+    return res.redirect("/");
   });
-  res.redirect('/');
+
 });
 
-// app.post("/logout", (req, res) => {
-//   req.session = null;
-//   res.redirect("/login");
-// });
+app.post("/logout", (req, res) => {
+  req.session = null;
+  res.redirect("/login");
+});
 
 app.get("/register", (req, res) => {
   console.log("Register Not Implemeted");
@@ -92,9 +94,10 @@ app.post("/story/:id", (req, res) => {
 
   // use a query to store the contribution in the database
   const storyId = req.params.id;
+
   console.log('story ID', storyId);
-  const clause = `INSERT INTO contributions (story_id, contribution, upvotes) VALUES (${storyId}, '${story_contribution}', 0);
-  `;
+  const clause = `INSERT INTO contributions (story_id, contribution, upvotes) VALUES (${storyId}, '${story_contribution}', 0);`;
+
   // insert value into data base
   db.query(clause)
     .then(data => {
@@ -107,46 +110,42 @@ app.post("/story/:id", (req, res) => {
 });
 
 app.get("/story/:id", (req, res) => {
+
   const storyId = req.params.id;
   const clause = `SELECT * FROM stories WHERE id = ${storyId};`;
-  console.log('clause', clause);
-  console.log('storyID', storyId);
-
+  const user = req.session.user_id;
   getUsers(clause).then((data) => {
     const clause2 = `SELECT * FROM contributions WHERE story_id = ${storyId} LIMIT 10`;
-    console.log(clause2);
+
     db.query(clause2).then((contributions) => {
       console.log('contributions', contributions);
-      res.render('story', { data, storyId, contributions: contributions.rows }); //db to data
+      res.render('story', { data, storyId, contributions: contributions.rows, user}); //db to data
 
     });
   });
 });
 
 app.get("/mystory", (req,res) => {
-  const user = 1; // This will be replaced with cookie
-  console.log(user);
+  const user = req.session.user_id; // This will be replaced with cookie
   const clause = `SELECT * FROM stories WHERE owner_id = ${user};`;
   getUsers(clause).then((data) => {
-    res.render("mystory", {data});
+    res.render("mystory", {data, user});
   });
 
 })
 
 app.get('/', (req, res) => {
-  const clause = 'SELECT * FROM stories;';
-  getUsers(clause).then((data) => {
-    res.render('index', { data });
-  });
+  res.redirect("/1");
 });
 
 app.get("/:id", (req, res) => {
   const pageId = req.params.id;
   const offset = (pageId - 1) * 3;
-  console.log(offset);
-  const clause = `SELECT * FROM stories LIMIT 3 OFFSET ${offset};`;
+  const user = req.session.user_id;
+  console.log(user);
+  const clause = `SELECT * FROM stories LIMIT 4 OFFSET ${offset};`;
   getUsers(clause).then((data) => {
-    res.render('index', { data });
+    res.render('index', { data, user });
   });
 });
 

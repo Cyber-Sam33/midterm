@@ -4,10 +4,19 @@
       <div class="navbar-header">
         <a class="navbar-brand" href="/">Your Story</a>
       </div>
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="/register"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-        <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-      </ul>
+      <% if (user) {%>
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="/mystory"><span class="glyphicon glyphicon-user"></span> My Story</a></li>
+          <li><a href="/login" method="POST"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+        </ul>
+      <%} else { %>
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="/register"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+          <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+        </ul>
+      <% } %>
     </div>
   </nav>
 </header>
+
+
