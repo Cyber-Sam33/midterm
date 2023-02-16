@@ -64,16 +64,16 @@
 
       <div class="contribution_container">
         <form action="/story/upvotes/<%=storyId%>/<%= contributions[index].id%>" method="POST">
-            <button>
-            <i class="fa-solid fa-heart heart_logo"></i></button>
-            <output name="upvoter" class="upvote" for="upvote">
-              <strong><%= contributions[index].upvotes%></strong></output>
-          </form>
-          <form action="/update/<%= storyId%>" method="POST">
-            <input hidden type="text" value="<%= contributions[index].contribution %>" name="text"/>
-            <p><%= contributions[index].contribution %></p>
-            <button>SELECT</button>
-          </form>
+          <button><i class="fa-solid fa-heart heart_logo"></i></button>
+          <output name="upvoter" class="upvote" for="upvote">
+          <strong><%= contributions[index].upvotes%></strong></output>
+        </form>
+
+        <form action="/add/<%= storyId%>" method="POST">
+          <input hidden type="text" value="<%= contributions[index].contribution %>" name="text"/>
+          <p><%= contributions[index].contribution %></p>
+          <button>SELECT</button>
+        </form>
       </div>
 
     </article>

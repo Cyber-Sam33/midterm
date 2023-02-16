@@ -91,22 +91,26 @@ app.post("/end/:id", (req, res) => {
   res.redirect("/");
 });
 
-app.post("/update/:id", (req, res) => {
+app.post("/add/:id", (req, res) => {
   //Need to select Current Story
   //Concatnate with Contribute
   const paragraph = req.body.text;
   const storyId = req.params.id;
-  const clause = `Update story SET story = story+'${paragraph}' WHERE id = ${storyId};`
 
-  getUsers(clause).then(data => {
-    res.redirect(`/`);
+  const currentStory = `SELECT story from stories WHERE id = ${storyId};`;
+
+  getUsers(currentStory).then(data => {
+    const story = data[0].story + paragraph;
+    const clause = `Update stories SET story = '${story}' WHERE id = ${storyId};`;
+    const removeClause = `DELETE FROM contributions WHERE story_id = ${storyId};`;
+    db.query(clause).then(data => {
+
+    });
+    db.query(removeClause).then(data => {
+      res.redirect(`/story/${storyId}`);
+    });
+
   });
-  //Then Save
-  // const clause = `SELECT contribution FROM contributions WHERE;`;
-  // getUsers(clause).then(data =>
-  //   {
-  //     const currentStory =
-  //   })
 });
 
 app.post("/story/:id", (req, res) => {
@@ -129,10 +133,10 @@ app.post("/story/:id", (req, res) => {
 });
 
 app.post("/story/upvotes/:story_id/:contribution_id", (req, res) => {
+
   const clause = `UPDATE contributions SET upvotes = upvotes + 1 WHERE id = $1 AND story_id = $2`;
   db.query(clause, [req.params.contribution_id, req.params.story_id])
     .then((result) => {
-      console.log(result);
       res.redirect(`/story/${req.params.story_id}`);
     }
     );
