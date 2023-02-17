@@ -31,7 +31,7 @@
       <h5 class="card-title"><%= data[index].title %></h5>
       <p class="card-text"><%= data[index].story %></p>
       </div>
-      <span>
+      <span class="progress-bar">
         <% console.log(data[index].end_story) %>
         <% if(data[index].end_story) {%>
           Completed
@@ -39,7 +39,7 @@
           In Progress
         <% }%>
       </span>
-      <a href="/story/<%= data[index].id %>" class="btn btn-primary" method="GET">Go to Story. Make sure to send story ID</a>
+      <a href="/story/<%= data[index].id %>" class="btn btn-primary" method="GET">Go to Story!</a>
     </div>
   </div>
   <% } %>

@@ -2,11 +2,17 @@
   display: flex;
   flex-direction: column;
   width: 70%;
-  border: solid 2px;
-  border-radius: 4px;
+  border: solid ;
+  // border-radius: 4px;
   border-color: #000000;
   justify-content: center;
   margin-bottom: 20px;
+  &-title {
+    border-bottom: solid;
+    font-size: 20px;
+    display: inline-block;
+  }
+
 }
 .card:hover{
   color: black;
@@ -17,19 +23,23 @@
 }
 
 .card-body {
+
   display: flex;
   justify-content: space-between;
+  background-color: #F2F2F2;      // new here
+  .btn {
+    border-radius: 0;
+  }
 }
 
-.card-title {
-  border-bottom: solid;
-  font-size: 20px;
-}
+
 
 .btn.btn-primary {
   display: flex;
   align-items: center;
+  background-color: #595047;
 }
+
 
 .card-text {
   padding-top: 10px;
@@ -59,6 +69,8 @@
   width: 841px;
   height: 352px;
   margin-bottom: 30px;
+  border: solid;
+  resize: none;
 }
 
 #start-story {
@@ -68,4 +80,23 @@
 
 .title {
   margin-bottom: 30px;
+}
+
+
+.container-fluid {
+  background-color: #595047;
+}
+
+
+.heart-button {
+  background: transparent;
+  border: none;
+}
+
+.title {
+  border: solid;
+}
+
+.textbox {
+  resize: none;
 }
