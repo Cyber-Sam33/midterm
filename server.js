@@ -176,7 +176,7 @@ app.get("/:id", (req, res) => {
   const pageId = req.params.id;
   const offset = (pageId - 1) * 3;
   const user = req.session.user_id;
-  const clause = `SELECT * FROM stories LIMIT 4 OFFSET ${offset};`;
+  const clause = `SELECT * FROM stories LIMIT 10 OFFSET ${offset};`;
   getUsers(clause).then((data) => {
     res.render('index', { data, user });
   });
