@@ -100,7 +100,7 @@ app.post("/add/:id", (req, res) => {
   const currentStory = `SELECT story from stories WHERE id = ${storyId};`;
 
   getUsers(currentStory).then(data => {
-    const story = data[0].story + paragraph;
+    const story = data[0].story + " "+ paragraph;
     const clause = `Update stories SET story = '${story}' WHERE id = ${storyId};`;
     const removeClause = `DELETE FROM contributions WHERE story_id = ${storyId};`;
     db.query(clause).then(data => {

@@ -72,8 +72,11 @@
         <form action="/add/<%= storyId%>" method="POST">
           <input hidden type="text" value="<%= contributions[index].contribution %>" name="text"/>
           <p><%= contributions[index].contribution %></p>
+          <% if(user) { %>
           <button>SELECT</button>
+          <% } %>
         </form>
+
       </div>
 
     </article>
