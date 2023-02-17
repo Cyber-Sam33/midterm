@@ -65,7 +65,9 @@ app.post("/login", (req, res) => {
   const password = req.body.password;
   const clause = `SELECT * FROM users WHERE email = '${email}';`;
   getUsers(clause).then((data) => {
-    req.session.user_id = data[0].id;
+    if (data[0].password === password) {
+      req.session.user_id = data[0].id;
+    }
     return res.redirect("/");
   });
 });

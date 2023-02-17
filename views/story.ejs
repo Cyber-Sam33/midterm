@@ -62,21 +62,24 @@
     <% for (let index in contributions) {%>
     <article class="upvoted_contributions">
 
-      <div class="contribution_container">
-        <form action="/story/upvotes/<%=storyId%>/<%= contributions[index].id%>" method="POST">
-          <button><i class="fa-solid fa-heart heart_logo"></i></button>
-          <output name="upvoter" class="upvote" for="upvote">
-          <strong><%= contributions[index].upvotes%></strong></output>
-        </form>
+      <div class="contribution-container">
+        <p><%= contributions[index].contribution %></p>
 
-        <form action="/add/<%= storyId%>" method="POST">
-          <input hidden type="text" value="<%= contributions[index].contribution %>" name="text"/>
-          <p><%= contributions[index].contribution %></p>
-          <% if(user) { %>
-          <button>SELECT</button>
-          <% } %>
-        </form>
-
+        <div class="heart-to-right">
+          <form action="/story/upvotes/<%=storyId%>/<%= contributions[index].   id%>" class="upvote-heart" method="POST">
+            <button class="heart-button">
+              <i class="fa-xl fa-solid fa-heart heart-logo"></i>
+            </button>
+            <output name="upvoter" class="upvote" for="upvote">
+            <strong><%= contributions[index].upvotes%></strong></output>
+          </form>
+          <form action="/add/<%= storyId%>" method="POST">
+            <input hidden type="text" value="<%= contributions[index].contribution %>" name="text"/>
+            <% if(user) { %>
+            <button class="btn btn-primary story_btn">This is it!</button>
+            <% } %>
+          </form>
+        </div>
       </div>
 
     </article>

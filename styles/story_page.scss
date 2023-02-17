@@ -19,6 +19,8 @@
   border: solid 2px;
   border-color: #000000;
   justify-content: center;
+  border: solid;
+  background:#F2F2F2;
 }
 
 .textbox{
@@ -28,22 +30,41 @@
     margin-top: 0;
 }
 
-.textbox:hover {
-  box-shadow: 10px 10px 10px grey;
-}
 
 .upvoted_contributions{
   border: solid black 2px;
   margin-top: 2rem;
   padding: 1rem;
+  width: 70%;
+  border: solid;
+  background: #F2F2F2;
 }
 
-.upvoted_contributions:hover {
-  box-shadow: 10px 10px 10px grey;
+.upvoted_contributions:hover { //this one
+  color: black;
+  cursor: pointer;
+  transition: 150ms;
+  transform: translate(4px, -4px);
+  box-shadow: -8px 8px 0
+
+}
+
+.upvote {
+  margin-left: 13px;
+  margin-bottom: 16px;
+}
+
+.upvote-heart {
+margin-left: auto;
+}
+
+.heart-to-right {
+  display: flex;
+  flex-direction: column;
 }
 
 .fa-solid {
-  color: royalblue;
+  color: #286090;
   width:10rem;
   height:10rem;
   margin: auto;
@@ -57,10 +78,33 @@
 
 
 
+.fa-solid.fa-heart.heart-logo {
+  display: inline;
+  font-weight: 900;
+  // transform: scale(0.2);
+}
 
+.contribution-container {
+  display: flex;
+  justify-content: space-between;
+}
+.button-counter-2 {
+  margin-left: auto;
+  margin-bottom: 24px;
+}
 
+.progress-bar {
+  color: #000000;
+}
+// .add-story-button {
+//   background: transparent;
+//     border: none;
+// }
 
-
+// .add-story-button:HOVER  {
+//   color: gold;
+//   cursor: pointer;
+// }
 
 
 
